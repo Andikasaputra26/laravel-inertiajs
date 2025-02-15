@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -37,8 +38,11 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route::get('/users',[UserController::class,'index'])->name('users.index');
-Route::get('/', function() {
-    return Inertia::render('Home',['name' => 'AldiAnsyah']);
-});
+// Route::get('/', function () {
+//     sleep(2);
+//     return Inertia::render('Home', ['name' => 'AldiAnsyah']);
+// });
+
+Route::resource('/', PostController::class);
 
 require __DIR__.'/auth.php';

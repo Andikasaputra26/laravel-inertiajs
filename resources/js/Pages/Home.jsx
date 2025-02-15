@@ -1,9 +1,27 @@
 import Navbar from "../Layouts/Navbar";
 
-const Home = ({ name }) => {
+const Home = ({ post }) => {
     return (
         <>
-            <h1>Halo Saya {name}</h1>
+            <div className="overflow-x-auto">
+                <table className="table table-zebra">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Body</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {post.map((item) => (
+                            <tr key={item.id}>
+                                <th>{item.id}</th>
+                                <td>{item.body}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            {new Date().toLocaleTimeString()}
         </>
     );
 };

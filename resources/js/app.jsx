@@ -3,7 +3,6 @@ import "../css/app.css";
 
 import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
-import Navbar from "./Layouts/Navbar";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
@@ -28,5 +27,6 @@ createInertiaApp({
     },
     progress: {
         color: "#4B5563",
+        showSpinner: true,
     },
 });
