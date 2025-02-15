@@ -37,12 +37,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/', [PostController::class, 'index']);
+Route::resource('post', PostController::class)->except('index');
 // Route::get('/users',[UserController::class,'index'])->name('users.index');
 // Route::get('/', function () {
 //     sleep(2);
 //     return Inertia::render('Home', ['name' => 'AldiAnsyah']);
 // });
 
-Route::resource('/', PostController::class);
 
 require __DIR__.'/auth.php';

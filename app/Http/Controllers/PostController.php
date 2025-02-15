@@ -14,12 +14,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        // $post = Post::get();
-        // return Inertia('Home', ['post' => $post]);
 
-        return Inertia::render('Home',[
-            'post' => Post::all(),
-        ]);	
+        $posts = Post::paginate(5); 
+
+        return Inertia::render('Home', [
+            'posts' => $posts, 
+    ]);
     }
 
     /**
@@ -27,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Post/Create');
     }
 
     /**
@@ -35,7 +35,13 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        sleep(2);
+        $fields = $request->validate([
+            'body' => 'required|string'
+        ]);
+
+        Post::create($fields);
+        return redirect('/');
     }
 
     /**

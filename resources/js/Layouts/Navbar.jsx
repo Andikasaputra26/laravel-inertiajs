@@ -5,7 +5,9 @@ export default function Navbar({ children }) {
         <>
             <div className="navbar bg-info rounded-full max-w-7xl mx-auto flex justify-center items-center">
                 <div className="flex-1">
-                    <a className="btn btn-ghost text-xl">daisyUI</a>
+                    <Link href="/" className="btn btn-ghost text-xl">
+                        daisyUI
+                    </Link>
                 </div>
                 <div className="flex-none">
                     <ul className="menu menu-horizontal px-1 text-xl items-center gap-4">
