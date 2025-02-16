@@ -5,17 +5,11 @@ const Home = ({ posts }) => {
     return (
         <div className="container mx-auto p-4">
             <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-                <div className="flex justify-end">
-                    <Link href="/post/create" className="btn btn-primary mb-4 ">
-                        Create Post
-                    </Link>
-                </div>
                 <table className="min-w-full border-collapse">
                     <thead>
                         <tr className="bg-blue-500 text-white">
                             <th className="px-4 py-2 text-left">ID</th>
                             <th className="px-4 py-2 text-left">Body</th>
-                            <th className="px-4 py-2 text-left">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,22 +21,6 @@ const Home = ({ posts }) => {
                                 <td className="px-4 py-2">{item.id}</td>
                                 <td className="px-4 py-2 truncate max-w-xs">
                                     {item.body}
-                                </td>
-                                <td className="px-4 py-2">
-                                    <Link
-                                        href={`/posts/${item.id}/delete`}
-                                        className="btn btn-secondary hover:underline"
-                                    >
-                                        Delete
-                                    </Link>
-                                </td>
-                                <td className="px-4 py-2">
-                                    <Link
-                                        href={`/posts/${item.id}/edit`}
-                                        className="btn btn-primary hover:underline"
-                                    >
-                                        Edit
-                                    </Link>
                                 </td>
                             </tr>
                         ))}

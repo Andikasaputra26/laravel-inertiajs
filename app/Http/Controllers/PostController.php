@@ -14,12 +14,20 @@ class PostController extends Controller
      */
     public function index()
     {
+        $posts = Post::latest()->paginate(10); // Menampilkan 10 post per halaman
 
-        $posts = Post::paginate(5); 
+        return Inertia::render('Post/Post', [
+            'posts' => $posts, // Kirim data ke frontend
+        ]);
+    }
+
+    public function publicPosts()
+    {
+        $posts = Post::query()->paginate(5);
 
         return Inertia::render('Home', [
             'posts' => $posts, 
-    ]);
+        ]);
     }
 
     /**
@@ -35,14 +43,14 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        sleep(2);
-        $fields = $request->validate([
-            'body' => 'required|string'
+        sleep(2); // Simulasi delay jika diperlukan
+        Post::create([
+            'body' => $request->validated()['body'],
         ]);
 
-        Post::create($fields);
-        return redirect('/');
+        return redirect()->route('post.index')->with('success', 'Post created successfully!');
     }
+
 
     /**
      * Display the specified resource.
