@@ -2,7 +2,7 @@ import React from "react";
 import { Head, Link } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-export default function Post({ auth, posts }) {
+export default function Post({ auth, posts = { data: [], links: [] } }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -33,6 +33,12 @@ export default function Post({ auth, posts }) {
                                     className="bg-gray-100 p-4 rounded-lg shadow hover:shadow-md transition"
                                 >
                                     <p className="text-gray-800">{post.body}</p>
+                                    <Link
+                                        href={route("post.edit", post.id)}
+                                        className="w-24 px-2 py-0 rounded-md bg-primary text-white hover:underline"
+                                    >
+                                        Edit
+                                    </Link>
                                 </div>
                             ))}
                         </div>

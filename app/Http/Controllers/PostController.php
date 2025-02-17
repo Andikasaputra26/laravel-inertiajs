@@ -43,12 +43,12 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        sleep(2); // Simulasi delay jika diperlukan
+        sleep(2); 
         Post::create([
             'body' => $request->validated()['body'],
         ]);
 
-        return redirect()->route('post.index')->with('success', 'Post created successfully!');
+        return redirect()->route('post.create')->with('success', 'Post created successfully!');
     }
 
 
@@ -65,7 +65,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return Inertia::render('Post/Update', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -73,7 +75,16 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        
+        $request->validate([
+            'body' => 'required|min:3', // Validasi minimal 3 karakter
+        ]);
+    
+        $post->update([
+            'body' => $request->body,
+        ]);
+
+        return redirect()->route('post.index')->with('success', 'Post updated successfully!');
     }
 
     /**

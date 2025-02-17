@@ -2,7 +2,7 @@ import { useForm, usePage } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 export default function Create() {
-    const { auth } = usePage().props; // Ambil data user dari Inertia
+    const { auth } = usePage().props;
     const { data, setData, post, errors, processing } = useForm({
         body: "",
     });
@@ -10,15 +10,13 @@ export default function Create() {
     function submit(e) {
         e.preventDefault();
         post(route("post.store"), {
-            preserveScroll: true, // Tetap di posisi saat ini setelah submit
-            onStart: () => console.log("Submitting..."),
+            preserveScroll: true,
             onSuccess: () => {
-                alert("Post created successfully!");
-                setData("body", ""); // Bersihkan form setelah submit
+                alert("Post berhasil dibuat!");
+                setData("body", "");
             },
             onError: (errors) => {
-                alert("Failed to create post. Please check your input.");
-                console.error(errors);
+                alert("Gagal menambahkan post. Periksa input Anda.");
             },
         });
     }
@@ -28,13 +26,13 @@ export default function Create() {
             <div className="p-10">
                 <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
                     <h1 className="text-2xl font-bold mb-4 text-center">
-                        Create a New Post
+                        Tambah Post
                     </h1>
 
                     <form onSubmit={submit}>
                         <div className="mb-4">
                             <label className="block text-gray-700 font-semibold mb-2">
-                                Post Content:
+                                Isi Post:
                             </label>
                             <textarea
                                 value={data.body}
@@ -43,7 +41,7 @@ export default function Create() {
                                 }
                                 rows={5}
                                 className="w-full border rounded-lg p-3 focus:ring focus:ring-blue-300"
-                                placeholder="Write something..."
+                                placeholder="Tulis sesuatu..."
                                 disabled={processing}
                             ></textarea>
                             {errors.body && (
@@ -55,14 +53,10 @@ export default function Create() {
 
                         <button
                             type="submit"
-                            className={`w-full py-2 px-4 rounded-lg text-white font-semibold transition ${
-                                processing
-                                    ? "bg-gray-400 cursor-not-allowed"
-                                    : "bg-blue-500 hover:bg-blue-600"
-                            }`}
+                            className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
                             disabled={processing}
                         >
-                            {processing ? "Submitting..." : "Submit"}
+                            {processing ? "Memproses..." : "Tambah"}
                         </button>
                     </form>
                 </div>
