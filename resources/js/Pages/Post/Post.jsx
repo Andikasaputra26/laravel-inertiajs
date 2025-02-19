@@ -39,6 +39,12 @@ export default function Post({ auth, posts = { data: [], links: [] } }) {
                                     >
                                         Edit
                                     </Link>
+                                    <Link
+                                        href={route("post.destroy", post.id)}
+                                        className="w-24 px-2 py-0 rounded-md bg-red-500 text-white hover:underline"
+                                    >
+                                        Hapus
+                                    </Link>
                                 </div>
                             ))}
                         </div>
