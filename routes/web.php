@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/post', [PostController::class, 'store'])->name('post.store');
     Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
     Route::put('/post/{post}', [PostController::class, 'update'])->name('post.update');
+    Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.delete');
 });
 
 Route::get('/', [PostController::class, 'publicPosts'])->name('home');

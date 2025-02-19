@@ -9,7 +9,7 @@ export default function Update({ auth, post }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route("post.update", post.id)); 
+        put(route("post.update", post.id));
     };
 
     return (
@@ -22,6 +22,7 @@ export default function Update({ auth, post }) {
                 <form
                     onSubmit={handleSubmit}
                     className="bg-white shadow-md rounded-lg p-6"
+                    method="POST"
                 >
                     <div className="mb-4">
                         <label className="block text-gray-700">Isi Post:</label>

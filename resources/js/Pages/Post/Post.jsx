@@ -32,6 +32,7 @@ export default function Post({ auth, posts = { data: [], links: [] } }) {
                                     key={post.id}
                                     className="bg-gray-100 p-4 rounded-lg shadow hover:shadow-md transition"
                                 >
+                                    {post.id}
                                     <p className="text-gray-800">{post.body}</p>
                                     <Link
                                         href={route("post.edit", post.id)}
@@ -39,11 +40,14 @@ export default function Post({ auth, posts = { data: [], links: [] } }) {
                                     >
                                         Edit
                                     </Link>
+
                                     <Link
-                                        href={route("post.destroy", post.id)}
+                                        href={route("post.delete", post.id)}
+                                        method="delete"
+                                        as="button"
                                         className="w-24 px-2 py-0 rounded-md bg-red-500 text-white hover:underline"
                                     >
-                                        Hapus
+                                        Delete
                                     </Link>
                                 </div>
                             ))}

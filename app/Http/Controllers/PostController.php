@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->paginate(10); // Menampilkan 10 post per halaman
+        $posts = Post::first()->paginate(10); // Menampilkan 10 post per halaman
 
         return Inertia::render('Post/Post', [
             'posts' => $posts, // Kirim data ke frontend
