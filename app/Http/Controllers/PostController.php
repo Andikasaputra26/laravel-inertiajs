@@ -12,6 +12,12 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $posts = Post::first()->paginate(10); // Menampilkan 10 post per halaman
@@ -43,13 +49,18 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        sleep(2); 
-        Post::create([
-            'body' => $request->validated()['body'],
+        $request->validate([
+            'body' => 'required|min:3', 
         ]);
 
-        return redirect()->route('post.create')->with('success', 'Post created successfully!');
+        Post::create([
+            'body' => $request->body,
+            'user_id' => auth()->id(), 
+        ]);
+
+        return redirect()->route('post.index')->with('success', 'Post created successfully!');
     }
+    
 
 
     /**
@@ -80,9 +91,7 @@ class PostController extends Controller
             'body' => 'required|min:3', // Validasi minimal 3 karakter
         ]);
     
-        $post->update([
-            'body' => $request->body,
-        ]);
+        $post->update($request->all());
 
         return redirect()->route('post.index')->with('success', 'Post updated successfully!');
     }
@@ -92,7 +101,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {   
-        $post = Post::find($post->id);
+        $this->authorize('delete', $post); 
+
         $post->delete();
 
         return redirect()->route('post.index')->with('success', 'Post deleted successfully!');

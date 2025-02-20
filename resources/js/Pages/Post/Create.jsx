@@ -1,9 +1,9 @@
-import { useForm, usePage } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { usePage, useForm } from "@inertiajs/react";
 
 export default function Create() {
     const { auth } = usePage().props;
-    const { data, setData, post, errors, processing } = useForm({
+    const { data, setData, post, errors, processing, reset } = useForm({
         body: "",
     });
 
@@ -13,9 +13,9 @@ export default function Create() {
             preserveScroll: true,
             onSuccess: () => {
                 alert("Post berhasil dibuat!");
-                setData("body", "");
+                reset(); // Reset input setelah sukses
             },
-            onError: (errors) => {
+            onError: () => {
                 alert("Gagal menambahkan post. Periksa input Anda.");
             },
         });
@@ -29,7 +29,7 @@ export default function Create() {
                         Tambah Post
                     </h1>
 
-                    <form onSubmit={submit}>
+                    <form onSubmit={submit} className="space-y-4">
                         <div className="mb-4">
                             <label className="block text-gray-700 font-semibold mb-2">
                                 Isi Post:
@@ -53,7 +53,11 @@ export default function Create() {
 
                         <button
                             type="submit"
-                            className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
+                            className={`w-full py-2 px-4 text-white rounded-lg ${
+                                processing
+                                    ? "bg-gray-400 cursor-not-allowed"
+                                    : "bg-blue-500 hover:bg-blue-600"
+                            }`}
                             disabled={processing}
                         >
                             {processing ? "Memproses..." : "Tambah"}
