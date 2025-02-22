@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.delete');
 
     // Product
-    Route::get('/product',[ProductController::class]);
+    Route::resource('product', ProductController::class);
 });
 
 Route::get('/', [PostController::class, 'publicPosts'])->name('home');
