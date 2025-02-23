@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
@@ -16,7 +15,7 @@ export default function Authenticated({ user, header, children }) {
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                <Link href="/">FrontEnd</Link>
+                                <Link href="/dashboard">Admin</Link>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -31,6 +30,12 @@ export default function Authenticated({ user, header, children }) {
                                     active={route().current("post.index")}
                                 >
                                     Post
+                                </NavLink>
+                                <NavLink
+                                    href={route("product.index")}
+                                    active={route().current("product.index")}
+                                >
+                                    Product
                                 </NavLink>
                             </div>
                         </div>
@@ -141,6 +146,12 @@ export default function Authenticated({ user, header, children }) {
                             active={route().current("post.index")}
                         >
                             Post
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("product.index")}
+                            active={route().current("product.index")}
+                        >
+                            Product
                         </ResponsiveNavLink>
                     </div>
 

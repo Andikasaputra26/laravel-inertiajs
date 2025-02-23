@@ -53,10 +53,14 @@ class PostController extends Controller
             'body' => 'required|min:3', 
         ]);
 
-        Post::create([
+        $post = Post::create([
             'body' => $request->body,
-            'user_id' => auth()->id(), 
         ]);
+
+        // Post::create([
+        //     'body' => $request->body,
+        //     'user_id' => auth()->id(), 
+        // ]);
 
         return redirect()->route('post.index')->with('success', 'Post created successfully!');
     }
@@ -66,14 +70,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Post $post)
     {
         return Inertia::render('Post/Update', [

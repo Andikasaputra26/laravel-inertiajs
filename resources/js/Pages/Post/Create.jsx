@@ -7,15 +7,20 @@ export default function Create() {
         body: "",
     });
 
-    function submit(e) {
+    function handleSubmit(e) {
         e.preventDefault();
+
+        console.log("Mengirim data:", data);
+
         post(route("post.store"), {
             preserveScroll: true,
-            onSuccess: () => {
+            onSuccess: (response) => {
+                console.log("Response sukses:", response);
                 alert("Post berhasil dibuat!");
-                reset(); // Reset input setelah sukses
+                reset();
             },
-            onError: () => {
+            onError: (errors) => {
+                console.error("Terjadi kesalahan:", errors);
                 alert("Gagal menambahkan post. Periksa input Anda.");
             },
         });
@@ -29,7 +34,7 @@ export default function Create() {
                         Tambah Post
                     </h1>
 
-                    <form onSubmit={submit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="mb-4">
                             <label className="block text-gray-700 font-semibold mb-2">
                                 Isi Post:
