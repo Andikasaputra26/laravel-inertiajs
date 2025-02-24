@@ -38,6 +38,9 @@ export default function Product({ auth, products }) {
                                         Nama Produk
                                     </th>
                                     <th className="py-3 px-6 text-left text-gray-700">
+                                        Category
+                                    </th>
+                                    <th className="py-3 px-6 text-left text-gray-700">
                                         Harga
                                     </th>
                                     <th className="py-3 px-6 text-left text-gray-700">
