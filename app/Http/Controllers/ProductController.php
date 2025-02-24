@@ -34,12 +34,16 @@ class ProductController extends Controller
     {
         $request->validate([
             'nama' => 'required',
+            'img' => 'required | image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id' => 'required',
             'price' => 'required',
             'stock' => 'required',
         ]);
 
         Product::create([
             'name' => $request->nama,
+            'img' => $request->img,
+            'category_id' => $request->category_id,
             'price' => $request->price,
             'stock' => $request->stock,
         ]);
