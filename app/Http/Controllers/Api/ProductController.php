@@ -38,4 +38,16 @@ class ProductController extends Controller
             'data' => $product
         ], 200);
     }
+
+    public function store(Request $request)
+    {
+        // Validasi dan simpan produk baru
+        $product = Product::create($request->all());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Produk berhasil ditambahkan',
+            'data' => $product
+        ], 201);
+    }
 }
