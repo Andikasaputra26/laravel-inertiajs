@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -13,9 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::get()->toArray();
+        $products = Product::with('category')->get();
         return Inertia::render('product/Product', [
-            'products' => $product
+            'products' => $products
         ]);
     }
 
@@ -24,7 +26,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('product/Create');
+        $categories = CategoryProduct::get()->toArray();
+
+        return Inertia::render('product/Create', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -32,33 +38,39 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required',
-            'img' => 'required | image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'category_id' => 'required',
-            'price' => 'required',
-            'stock' => 'required',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'required|exists:category_product,id',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
         ]);
-
-        Product::create([
-            'name' => $request->nama,
-            'img' => $request->img,
-            'category_id' => $request->category_id,
-            'price' => $request->price,
-            'stock' => $request->stock,
-        ]);
-
-        return redirect()->route('product.index')->with('success', 'Product created successfully!');
+    
+        if ($request->hasFile('img')) {
+            $file = $request->file('img');
+            $filename = time() . '_' . $file->getClientOriginalName(); // Nama unik
+            $file->move(public_path('imgproduct'), $filename); // Simpan di public/imgproduct
+    
+            $validated['img'] = 'imgproduct/' . $filename; // Simpan path untuk akses di frontend
+        }
+    
+        Product::create($validated);
+    
+        return redirect()->route('product.index')->with('success', 'Produk berhasil ditambahkan!');
     }
+    
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        $product = Product::find($id);
+        $product = Product::with('category')->findOrFail($id);
+        $categories = CategoryProduct::all();
+
         return Inertia::render('product/Edit', [
-            'product' => $product
+            'product' => $product,
+            'categories' => $categories
         ]);
     }
 
@@ -67,21 +79,53 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $product = Product::findOrFail($id);
 
-       $product = Product::find($id);
-       $product->update($request->all());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'required|exists:category_products,id',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+        ]);
 
-        return redirect()->route('product.index')->with('success', 'Product updated successfully!');
+        // Jika ada file gambar baru yang diunggah
+        if ($request->hasFile('img')) {
+            // Hapus gambar lama jika ada
+            if ($product->img) {
+                Storage::disk('public')->delete($product->img);
+            }
+
+            // Simpan gambar baru
+            $path = $request->file('img')->store('imgproduct', 'public');
+            $validated['img'] = $path;
+        } else {
+            // Jangan ubah img jika tidak ada gambar baru
+            unset($validated['img']);
+        }
+
+        // Update produk dengan data yang sudah divalidasi
+        $product->update($validated);
+
+        return redirect()->route('product.index')->with('success', 'Produk berhasil diperbarui!');
     }
+
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
+
+        // Hapus gambar jika ada
+        if ($product->img) {
+            Storage::disk('public/imgproduct')->delete($product->img);
+        }
+
         $product->delete();
 
-        return redirect()->route('product.index')->with('success', 'Product deleted successfully!');
+        return redirect()->route('product.index')->with('success', 'Produk berhasil dihapus!');
     }
 }

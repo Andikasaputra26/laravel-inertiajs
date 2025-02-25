@@ -1,8 +1,16 @@
 import React from "react";
-import { Head, Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 export default function Product({ auth, products }) {
+    const { delete: destroy } = useForm();
+
+    const handleDelete = (id) => {
+        if (confirm("Apakah Anda yakin ingin menghapus produk ini?")) {
+            destroy(route("product.delete", id));
+        }
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -21,12 +29,13 @@ export default function Product({ auth, products }) {
                         Tambah Produk
                     </Link>
                 </div>
+
+                {/* Tabel Produk */}
                 <div className="max-w-7xl mx-auto bg-white p-6 shadow-lg rounded-lg">
-                    <div className="flex justify-between items-center mb-6">
-                        <h3 className="text-xl font-semibold text-gray-700">
-                            Daftar Produk
-                        </h3>
-                    </div>
+                    <h3 className="text-xl font-semibold text-gray-700 mb-6">
+                        Daftar Produk
+                    </h3>
+
                     <div className="overflow-x-auto">
                         <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
                             <thead>
@@ -38,7 +47,10 @@ export default function Product({ auth, products }) {
                                         Nama Produk
                                     </th>
                                     <th className="py-3 px-6 text-left text-gray-700">
-                                        Category
+                                        Gambar
+                                    </th>
+                                    <th className="py-3 px-6 text-left text-gray-700">
+                                        Kategori
                                     </th>
                                     <th className="py-3 px-6 text-left text-gray-700">
                                         Harga
@@ -52,53 +64,65 @@ export default function Product({ auth, products }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {products.length > 0 ? (
+                                {products?.length > 0 ? (
                                     products.map((product, index) => (
                                         <tr
                                             key={product.id}
                                             className="border-b hover:bg-gray-50"
                                         >
-                                            <td className="py-3 px-6">
+                                            <td className="py-3 px-6 text-center">
                                                 {index + 1}
                                             </td>
                                             <td className="py-3 px-6">
                                                 {product.name}
                                             </td>
-                                            <td className="py-3 px-6">
-                                                Rp{" "}
-                                                {product.price.toLocaleString()}
+                                            <td className="py-3 px-6 text-center">
+                                                <img
+                                                    src={`/${product.img}`}
+                                                    alt={product.name}
+                                                    className="mx-auto w-16 h-16 object-cover rounded"
+                                                />
                                             </td>
                                             <td className="py-3 px-6">
+                                                {product.category
+                                                    ?.name_category || "-"}
+                                            </td>
+                                            <td className="py-3 px-6 text-center">
+                                                Rp{" "}
+                                                {product.price?.toLocaleString()}
+                                            </td>
+                                            <td className="py-3 px-6 text-center">
                                                 {product.stock}
                                             </td>
-                                            <td className="py-3 px-6">
-                                                <Link
-                                                    href={route(
-                                                        "product.edit",
-                                                        product.id
-                                                    )}
-                                                    className="hover:underline mr-3 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow-md transition"
-                                                >
-                                                    Edit
-                                                </Link>
-                                                <Link
-                                                    href={route(
-                                                        "product.delete",
-                                                        product.id
-                                                    )}
-                                                    method="delete"
-                                                    as="button"
-                                                    className="bg-red-600 hover:underline mr-3 text-white py-2 px-4 rounded-md shadow-md transition"
-                                                >
-                                                    Hapus
-                                                </Link>
+                                            <td className="py-3 px-6 text-center">
+                                                <div className="flex justify-center gap-2">
+                                                    <Link
+                                                        href={route(
+                                                            "product.edit",
+                                                            product.id
+                                                        )}
+                                                        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow-md transition"
+                                                    >
+                                                        Edit
+                                                    </Link>
+                                                    <button
+                                                        onClick={() =>
+                                                            handleDelete(
+                                                                product.id
+                                                            )
+                                                        }
+                                                        className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-md transition"
+                                                    >
+                                                        Hapus
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
                                         <td
-                                            colSpan="4"
+                                            colSpan="7"
                                             className="text-center py-4 text-gray-500"
                                         >
                                             Tidak ada produk yang tersedia.

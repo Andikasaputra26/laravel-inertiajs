@@ -8,6 +8,13 @@ export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
+    const navigationLinks = [
+        { label: "Dashboard", href: "dashboard" },
+        { label: "Post", href: "post.index" },
+        { label: "Product", href: "product.index" },
+        { label: "Category", href: "category.index" },
+    ];
+
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -19,24 +26,15 @@ export default function Authenticated({ user, header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
-                                >
-                                    Dashboard
-                                </NavLink>
-                                <NavLink
-                                    href={route("post.index")}
-                                    active={route().current("post.index")}
-                                >
-                                    Post
-                                </NavLink>
-                                <NavLink
-                                    href={route("product.index")}
-                                    active={route().current("product.index")}
-                                >
-                                    Product
-                                </NavLink>
+                                {navigationLinks.map((link) => (
+                                    <NavLink
+                                        key={link.label}
+                                        href={route(link.href)}
+                                        active={route().current(link.href)}
+                                    >
+                                        {link.label}
+                                    </NavLink>
+                                ))}
                             </div>
                         </div>
 
@@ -135,24 +133,15 @@ export default function Authenticated({ user, header, children }) {
                     }
                 >
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink
-                            href={route("dashboard")}
-                            active={route().current("dashboard")}
-                        >
-                            Dashboard
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route("post.index")}
-                            active={route().current("post.index")}
-                        >
-                            Post
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route("product.index")}
-                            active={route().current("product.index")}
-                        >
-                            Product
-                        </ResponsiveNavLink>
+                        {navigationLinks.map((link) => (
+                            <ResponsiveNavLink
+                                key={link.label}
+                                href={route(link.href)}
+                                active={route().current(link.href)}
+                            >
+                                {link.label}
+                            </ResponsiveNavLink>
+                        ))}
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">

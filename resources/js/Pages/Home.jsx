@@ -1,8 +1,6 @@
 "use client";
 
-import { Card } from "@/Components/ui/card";
 import Navbar from "../Layouts/Navbar";
-import { Link } from "@inertiajs/react";
 import { useState } from "react";
 import { ChevronsDown } from "lucide-react";
 
@@ -123,55 +121,6 @@ const Home = ({ posts }) => {
                 </div>
             </section>
         </div>
-        // <div className="container mx-auto p-4">
-        //     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-        //         <table className="min-w-full border-collapse">
-        //             <thead>
-        //                 <tr className="bg-blue-500 text-white">
-        //                     <th className="px-4 py-2 text-left">ID</th>
-        //                     <th className="px-4 py-2 text-left">Body</th>
-        //                 </tr>
-        //             </thead>
-        //             <tbody>
-        //                 {posts.data.map((item) => (
-        //                     <tr
-        //                         key={item.id}
-        //                         className="border-b hover:bg-gray-100"
-        //                     >
-        //                         <td className="px-4 py-2">{item.id}</td>
-        //                         <td className="px-4 py-2 truncate max-w-xs">
-        //                             {item.body}
-        //                         </td>
-        //                     </tr>
-        //                 ))}
-        //             </tbody>
-        //         </table>
-        //     </div>
-
-        //     {/* Pagination */}
-        //     <div className="flex flex-wrap justify-center items-center gap-2 mt-6">
-        //         {posts.links.map((link, index) =>
-        //             link.url ? (
-        //                 <Link
-        //                     key={index}
-        //                     href={link.url}
-        //                     className={`px-4 py-2 border rounded-md ${
-        //                         link.active
-        //                             ? "bg-blue-500 text-white"
-        //                             : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-        //                     }`}
-        //                     dangerouslySetInnerHTML={{ __html: link.label }}
-        //                 />
-        //             ) : (
-        //                 <span
-        //                     key={index}
-        //                     className="px-4 py-2 border rounded-md bg-gray-300 text-gray-500 cursor-not-allowed"
-        //                     dangerouslySetInnerHTML={{ __html: link.label }}
-        //                 />
-        //             )
-        //         )}
-        //     </div>
-        // </div>
     );
 };
 
