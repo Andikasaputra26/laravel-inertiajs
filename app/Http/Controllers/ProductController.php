@@ -82,11 +82,11 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'string|max:255',
             'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'category_id' => 'required|exists:category_products,id',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
+            'category_id' => 'exists:category_products,id',
+            'price' => 'numeric|min:0',
+            'stock' => 'integer|min:0',
         ]);
 
         // Jika ada file gambar baru yang diunggah

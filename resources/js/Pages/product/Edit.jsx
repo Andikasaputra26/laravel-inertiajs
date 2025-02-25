@@ -36,14 +36,16 @@ export default function EditProduct({ auth, product, categories }) {
         formData.append("price", data.price);
         formData.append("stock", data.stock);
         formData.append("category_id", data.category_id);
+
         if (data.img) {
             formData.append("img", data.img);
         }
 
         put(route("product.update", product.id), {
-            preserveScroll: true,
-            forceFormData: true,
             data: formData,
+            headers: { "Content-Type": "multipart/form-data" }, // Pastikan header ini ditambahkan
+            preserveScroll: true,
+            forceFormData: true, // Pastikan menggunakan ini
             onSuccess: () => {
                 alert("Produk berhasil diperbarui!");
                 reset();
