@@ -1,8 +1,9 @@
 "use client";
 
-import Navbar from "../Layouts/Navbar";
 import { useState } from "react";
-import { ChevronsDown } from "lucide-react";
+import MainLayout from "@/Layouts/MainLayout";
+import HeroSection from "@/Components/HeroSection";
+import ProductList from "@/Components/ProductList";
 
 const Home = ({ posts }) => {
     const products = [
@@ -46,84 +47,13 @@ const Home = ({ posts }) => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center w-full min-h-screen">
-            <div
-                className="hero min-h-screen"
-                style={{
-                    backgroundImage:
-                        "url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)",
-                }}
-            >
-                <div className="hero-overlay bg-opacity-60"></div>
-                <div className="hero-content text-neutral-content text-center">
-                    <div className="max-w-md">
-                        <h1 className="mb-5 text-5xl font-bold">
-                            Selamat Datang
-                        </h1>
-
-                        <p className="mb-5">
-                            Di Toko Online, kami menyediakan berbagai produk
-                            elektronik berkualitas tinggi untuk memenuhi
-                            kebutuhan Anda. Dapatkan pengalaman belanja online
-                            yang menyenangkan dan nyaman di Toko Online.
-                        </p>
-                        <div className="flex flex-col items-center justify-center space-y-4">
-                            <button
-                                onClick={() => {
-                                    document
-                                        .getElementById("products")
-                                        .scrollIntoView({ behavior: "smooth" });
-                                    return false;
-                                }}
-                                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300"
-                                type="button"
-                            >
-                                Read Product
-                            </button>
-                            <ChevronsDown
-                                size={40}
-                                className="text-blue-600 animate-bounce"
-                            />
-                        </div>
-                    </div>
-                </div>
+        <MainLayout>
+            <div className="flex flex-col items-center justify-center w-full min-h-screen">
+                <HeroSection />
+                <ProductList products={products} addToCart={addToCart} />
             </div>
-
-            <section className="py-10 px-8" id="products">
-                <h3 className="text-2xl font-semibold text-gray-800 mb-6">
-                    Produk Unggulan
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {products.map((product) => (
-                        <div
-                            key={product.id}
-                            className="bg-white p-4 rounded-lg shadow-md"
-                        >
-                            <img
-                                src={product.image}
-                                alt={product.name}
-                                className="w-full max-h-40 bg-cover mb-4 md:mb-6 md:min-h-48 mx-auto lg:h-56"
-                            />
-                            <h4 className="text-lg font-semibold">
-                                {product.name}
-                            </h4>
-                            <p className="text-gray-600">
-                                Rp {product.price.toLocaleString()}
-                            </p>
-                            <button
-                                className="mt-3 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full"
-                                onClick={() => addToCart(product)}
-                            >
-                                Tambah ke Keranjang
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            </section>
-        </div>
+        </MainLayout>
     );
 };
-
-Home.layout = (page) => <Navbar children={page} title="Welcome" />;
 
 export default Home;
