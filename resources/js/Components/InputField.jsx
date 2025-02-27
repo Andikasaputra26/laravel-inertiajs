@@ -5,7 +5,7 @@ function InputField({ label, name, value, type = "text", onChange, errors }) {
             <input
                 type={type}
                 value={value}
-                onChange={(e) => onChange(name, e.target.value)}
+                onChange={(e) => onChange(e)}
                 className="w-full border rounded-lg p-3 focus:ring focus:ring-blue-300"
                 required
             />

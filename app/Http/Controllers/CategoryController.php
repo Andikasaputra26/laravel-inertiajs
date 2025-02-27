@@ -8,12 +8,16 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $category;
+
+    public function __construct(CategoryProduct $category)
+    {
+        $this->category = $category;
+    }
+
     public function index()
     {
-        $category = CategoryProduct::get()->toArray();
+        $category = $this->category->get()->toArray();
         return Inertia::render('Category/Category', [
             'category' => $category
         ]);
@@ -36,7 +40,7 @@ class CategoryController extends Controller
             'name_category' => 'required',
         ]);
 
-        CategoryProduct::create([
+        $this->category->create([
             'name_category' => $request->name_category,
         ]);
 
@@ -56,7 +60,7 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = CategoryProduct::findOrFail($id);
+        $category = $this->category->findOrFail($id);
     
         return Inertia::render('Category/CreateEditCategory', [
             'category' => $category
@@ -72,7 +76,7 @@ class CategoryController extends Controller
             'name_category' => 'required',
         ]);
 
-        CategoryProduct::find($id)->update([
+        $this->category->find($id)->update([
             'name_category' => $request->name_category,
         ]);
 
@@ -84,7 +88,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        CategoryProduct::find($id)->delete();
+        $this->category->find($id)->delete();
         return redirect()->route('category.index');
     }
 }
