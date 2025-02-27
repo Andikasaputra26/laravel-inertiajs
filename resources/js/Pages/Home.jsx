@@ -5,7 +5,7 @@ import MainLayout from "@/Layouts/MainLayout";
 import HeroSection from "@/Components/HeroSection";
 import ProductList from "@/Components/ProductList";
 
-const Home = ({ posts }) => {
+const Home = () => {
     const products = [
         {
             id: 1,
