@@ -13,9 +13,20 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     protected $product;
+     protected $category;
+
+    public function __construct(Product $product, CategoryProduct $category)
+    {
+        $this->product = $product;
+        $this->category = $category;
+
+    }
+
     public function index()
     {
-        $products = Product::with('category')->get();
+        $products = $this->product->with('category')->get();
         return Inertia::render('product/Product', [
             'products' => $products
         ]);
@@ -26,7 +37,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = CategoryProduct::get()->toArray();
+        $categories = $this->category->get()->toArray();
 
         return Inertia::render('product/Create', [
             'categories' => $categories
@@ -65,8 +76,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::with('category')->findOrFail($id);
-        $categories = CategoryProduct::all();
+        $product = $this->product->with('category')->findOrFail($id);
+        $categories = $this->category->get();
 
         return Inertia::render('product/Edit', [
             'product' => $product,
@@ -79,7 +90,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $product = Product::findOrFail($id);
+        $product = $this->product->findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'string|max:255',
@@ -117,7 +128,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Product::findOrFail($id);
+        $product = $this->product->findOrFail($id);
 
         // Hapus gambar jika ada
         if ($product->img) {
