@@ -11,6 +11,7 @@ export default function Navbar({ children }) {
         { name: "About", link: "/" },
         { name: "Product", link: "/" },
         { name: "Contact", link: "/" },
+        { name: "Login", link: "/" },
     ];
 
     return (

@@ -11,13 +11,13 @@ class Order extends Model
 
     protected $fillable = ['customer_id','total_price', 'status'];
 
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class);
-    }  
+    // public function customer()
+    // {
+    //     return $this->belongsTo(Customer::class);
+    // }  
     
-    public function orderDetails()
-    {
-        return $this->hasMany(OrderDetail::class);
-    }
+    // public function orderDetails()
+    // {
+    //     return $this->hasMany(OrderDetail::class);
+    // }
 }
