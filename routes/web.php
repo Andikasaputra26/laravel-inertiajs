@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerAuthController;
 
 // Home Route
 Route::get('/', [PostController::class, 'publicPosts'])->name('home');
@@ -66,5 +67,9 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('delete');
     });
 });
+
+Route::get('/customer/login', [CustomerAuthController::class, 'showLogin'])->name('customer.login');
+Route::post('/customer/login', [CustomerAuthController::class, 'login']);
+Route::post('/customer/logout', [CustomerAuthController::class, 'logout'])->name('customer.logout');
 
 require __DIR__.'/auth.php';
