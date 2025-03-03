@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/react";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
-export default function Navbar({ children }) {
+export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const toggleMenu = () => setIsOpen(!isOpen);
 
