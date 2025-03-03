@@ -16,7 +16,7 @@ export default function Create() {
             preserveScroll: true,
             onSuccess: (response) => {
                 console.log("Response sukses:", response);
-                alert("Post berhasil dibuat!");
+                alert("Data post berhasil dibuat!");
                 reset();
             },
             onError: (errors) => {
