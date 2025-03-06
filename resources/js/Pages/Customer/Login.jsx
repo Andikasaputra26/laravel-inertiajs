@@ -26,7 +26,6 @@ export default function Login() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             type="email"
-                            errors=""
                         />
                         <InputField
                             label="Password"
@@ -34,7 +33,6 @@ export default function Login() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             type="password"
-                            errors=""
                         />
                     </div>
                     <div className="mt-6">
