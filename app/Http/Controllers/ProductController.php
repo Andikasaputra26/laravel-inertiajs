@@ -57,18 +57,21 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
         ]);
     
-        if ($request->hasFile('img')) {
-            $file = $request->file('img');
-            $filename = time() . '_' . $file->getClientOriginalName(); // Nama unik
-            $file->move(public_path('imgproduct'), $filename); // Simpan di public/imgproduct
-    
-            $validated['img'] = 'imgproduct/' . $filename; // Simpan path untuk akses di frontend
+        if (!$request->hasFile('img')) {
+            return response()->json(['error' => 'Gambar tidak terkirim'], 400);
         }
+    
+        $file = $request->file('img');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $path = $file->storeAs('public/imgproduct', $filename); // Simpan ke storage
+    
+        $validated['img'] = str_replace('public/', 'storage/', $path); // Path untuk frontend
     
         Product::create($validated);
     
         return redirect()->route('product.index')->with('success', 'Produk berhasil ditambahkan!');
     }
+    
     
 
     /**
